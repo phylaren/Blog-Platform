@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import prisma from '../config/db';
 import { generateToken } from '../utils/jwt';
+import { AuthRequest } from '../middlewares/authMiddleware';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -60,5 +61,31 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Помилка сервера під час входу' });
+  }
+};
+
+export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      res.status(400).json({ error: 'ID користувача не знайдено' });
+      return;
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, name: true, role: true, createdAt: true }
+    });
+
+    if (!user) {
+      res.status(404).json({ error: 'Користувача не знайдено' });
+      return;
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Помилка сервера' });
   }
 };
