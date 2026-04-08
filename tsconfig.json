@@ -31,7 +31,7 @@
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
-    "moduleResolution": "node",
+    //"moduleResolution": "node",
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
