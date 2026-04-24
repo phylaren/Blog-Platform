@@ -90,3 +90,25 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
     res.status(500).json({ error: 'Помилка сервера' });
   }
 };
+
+export const getUsers = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user?.id;
+
+    const user = await prisma.user.findUnique({ where: { id: userId! } });
+    if (user?.role !== 'ADMIN') {
+      res.status(403).json({ error: 'Доступ заборонено. Тільки для адміністраторів' });
+      return;
+    }
+
+    const users = await prisma.user.findMany({
+      select: { id: true, email: true, name: true, role: true, createdAt: true },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    res.json(users);
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Помилка при отриманні користувачів' });
+  }
+};
