@@ -10,7 +10,7 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      res.status(401).json({ error: 'Немає доступу. Будь ласка, авторизуйтесь.' });
+      res.status(401).json({ error: 'Немає доступу. Будь ласка, авторизуйтесь' });
       return;
     }
 
@@ -24,6 +24,6 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
 
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Недійсний або прострочений токен.' });
+    res.status(401).json({ error: 'Недійсний або прострочений токен' });
   }
 };
