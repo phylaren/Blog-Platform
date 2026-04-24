@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "build": "npx prisma generate && tsc",
-    "start": "npx prisma db push && npx prisma db seed && node dist/server.ts"
+    "start": "npx prisma db push && node dist/server.ts"
   },
   "repository": {
     "type": "git",
