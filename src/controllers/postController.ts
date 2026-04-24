@@ -31,16 +31,39 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
 
 export const getPosts = async (req: Request, res: Response): Promise<void> => {
   try {
-    const posts = await prisma.post.findMany({
-      where: { published: true },
-      include: {
-        author: { select: { name: true, email: true } },
-        category: true,
-      },
-      orderBy: { createdAt: 'desc' },
-    });
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const categoryId = req.query.categoryId as string;
 
-    res.json(posts);
+    const skip = (page - 1) * limit;
+
+    const whereCondition: any = { published: true };
+    if (categoryId) {
+      whereCondition.categoryId = categoryId;
+    }
+
+    const [posts, totalItems] = await Promise.all([
+      prisma.post.findMany({
+        where: whereCondition,
+        skip,
+        take: limit,
+        include: {
+          author: { select: { name: true } },
+          category: true,
+        },
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.post.count({ where: whereCondition })
+    ]);
+
+    res.json({
+      data: posts,
+      meta: {
+        totalItems,
+        currentPage: page,
+        totalPages: Math.ceil(totalItems / limit),
+      }
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Помилка при отриманні постів' });
