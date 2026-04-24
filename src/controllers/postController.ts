@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import prisma from '../config/db';
 import { AuthRequest } from '../middlewares/authMiddleware';
+import logger from '../utils/logger';
 
 export const createPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -24,7 +25,7 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
 
     res.status(201).json(post);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при створенні поста' });
   }
 };
@@ -65,7 +66,7 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
       }
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при отриманні постів' });
   }
 };
@@ -90,7 +91,7 @@ export const getPostById = async (req: Request, res: Response): Promise<void> =>
 
     res.json(post);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при отриманні поста' });
   }
 };
@@ -120,7 +121,7 @@ export const updatePost = async (req: AuthRequest, res: Response): Promise<void>
 
     res.json(updatedPost);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при оновленні поста' });
   }
 };
@@ -146,7 +147,7 @@ export const deletePost = async (req: AuthRequest, res: Response): Promise<void>
 
     res.json({ message: 'Пост успішно видалено' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при видаленні поста' });
   }
 };

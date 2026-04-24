@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import prisma from '../config/db';
 import { generateToken } from '../utils/jwt';
 import { AuthRequest } from '../middlewares/authMiddleware';
+import logger from '../utils/logger';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -31,7 +32,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       token,
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка сервера під час реєстрації' });
   }
 };
@@ -59,7 +60,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       token,
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка сервера під час входу' });
   }
 };
@@ -85,7 +86,7 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
 
     res.json(user);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка сервера' });
   }
 };

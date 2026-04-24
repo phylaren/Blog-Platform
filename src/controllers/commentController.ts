@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import prisma from '../config/db';
 import { AuthRequest } from '../middlewares/authMiddleware';
+import logger from '../utils/logger';
 
 export const addComment = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -32,7 +33,7 @@ export const addComment = async (req: AuthRequest, res: Response): Promise<void>
 
     res.status(201).json(comment);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при додаванні коментаря' });
   }
 };
@@ -51,7 +52,7 @@ export const getCommentsByPost = async (req: Request, res: Response): Promise<vo
 
     res.json(comments);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при отриманні коментарів' });
   }
 };
@@ -77,7 +78,7 @@ export const deleteComment = async (req: AuthRequest, res: Response): Promise<vo
 
     res.json({ message: 'Коментар успішно видалено' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Помилка при видаленні коментаря' });
   }
 };
