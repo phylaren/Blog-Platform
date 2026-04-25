@@ -1,39 +1,22 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
 
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
     "module": "CommonJS",
     "target": "ES2022",
-    "types": ["jest", "node"],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+    "types": ["node"], 
 
-    // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
     "ignoreDeprecations": "6.0",
     "moduleResolution": "node",
-    // Recommended Options
+
     "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": false,
@@ -43,7 +26,12 @@
     "skipLibCheck": true,
 
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*", "src/tests"]
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "src/tests",
+    "**/*.test.ts"
+  ]
 }
