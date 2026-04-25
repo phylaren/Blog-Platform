@@ -39,3 +39,9 @@ export const updatePostSchema = z.object({
       .nullable(),
   }),
 });
+
+export const postIdSchema = z.object({
+  params: z.object({
+    id: z.uuid('Некоректний формат ID коментаря'),
+  }),
+});
