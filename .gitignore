@@ -26,3 +26,5 @@ Thumbs.db
 
 jest.config.js
 tests/
+
+logs/
