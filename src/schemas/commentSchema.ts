@@ -7,11 +7,7 @@ export const addCommentSchema = z.object({
   body: z.object({
     content: z.string()
       .min(1, 'Коментар не може бути порожнім')
-      .max(500, 'Коментар занадто довгий (макс. 500 символів)')
-      .refine(value => value !== null && value !== undefined, {
-        message: 'Текст коментаря обов\'язковий',
-        path: ['body', 'content'],
-      }),
+      .max(500, 'Коментар занадто довгий (макс. 500 символів)'),
   }),
 });
 

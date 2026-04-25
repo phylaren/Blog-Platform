@@ -9,7 +9,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "CommonJS",
     "target": "ES2022",
-    "types": [],
+    "types": ["jest", "node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -31,7 +31,8 @@
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
-    //"moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
+    "moduleResolution": "node",
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
@@ -44,5 +45,5 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/tests"]
 }
